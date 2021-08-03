@@ -5,10 +5,11 @@ import Order from "./Order"
 export default class PlaceOrder{
     coupons: Coupon[];
     orders: Order[];
-    
+
     constructor(){
         this.coupons = [
-            new Coupon("VALE20",20)
+            new Coupon("VALE20",20, new Date("08/03/2021")),
+            new Coupon("VALE10",10, new Date("08/02/2021"))
         ]
         this.orders = [];
     }
@@ -20,7 +21,7 @@ export default class PlaceOrder{
         }
         if (input.coupon){
             const coupon = this.coupons.find(coupon => coupon.code === input.coupon);
-            if (coupon) order.addCoupon(coupon);
+            if (coupon && coupon.isValid()) order.addCoupon(coupon);
         }
         const total = order.getTotal();
         this.orders.push(order);
@@ -28,4 +29,7 @@ export default class PlaceOrder{
             total
         };
     }
+
+
+
 }
